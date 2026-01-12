@@ -111,6 +111,3 @@ flutter test
 - Periksa rules Firestore agar hanya pemilik UID dapat membaca/menulis `users/{uid}/notes/*`.
 - Jika data tidak muncul, pastikan `noteStream` menerima UID aktif (lihat binding di `NoteController`).
 - Ingin login Google? UI tinggal ditambahkan karena `google_sign_in` sudah menjadi dependensi.
-
-## Lisensi
-Belum ditentukan. Tambahkan lisensi sesuai kebutuhan proyek.
