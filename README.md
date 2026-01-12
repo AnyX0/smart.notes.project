@@ -8,9 +8,8 @@ Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ri
   <a href="https://github.com/AnyX0/smart.notes.project/releases/latest/download/app-release.apk">
     <img src="https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"/>
   </a>
-</p>
-
 Atau kunjungi halaman [Releases](https://github.com/AnyX0/smart.notes.project/releases) untuk versi lainnya.
+</p>
 
 ## Fitur Utama
 - Autentikasi email-password (Firebase Auth) dengan sesi reaktif via GetX.
