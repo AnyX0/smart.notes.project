@@ -11,6 +11,34 @@ Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ri
 - Tema system/light/dark serta halaman akun untuk menampilkan nama, email, dan aksi logout.
 - Kesiapan Google Sign-In (dependensi sudah ada, UI bisa ditambahkan kemudian).
 
+## Tampilan Aplikasi
+
+### Autentikasi
+<p align="center">
+  <img src="Rancangan/login_screen.png" width="250" alt="Login Screen"/>
+  <img src="Rancangan/sign_up_screen_DM.png" width="250" alt="Sign Up Screen (Dark Mode)"/>
+</p>
+
+### Halaman Utama
+<p align="center">
+  <img src="Rancangan/home_screen_grid_view.png" width="250" alt="Home Screen Grid View"/>
+  <img src="Rancangan/home_screen_DM.png" width="250" alt="Home Screen (Dark Mode)"/>
+  <img src="Rancangan/add_note_screen.png" width="250" alt="Add Note Screen"/>
+</p>
+
+### Pengaturan & Akun
+<p align="center">
+  <img src="Rancangan/setting_screen.png" width="250" alt="Setting Screen"/>
+  <img src="Rancangan/device_setting.png" width="250" alt="Device Setting"/>
+  <img src="Rancangan/account_screen.png" width="250" alt="Account Screen"/>
+  <img src="Rancangan/account_screen_DM.png" width="250" alt="Account Screen (Dark Mode)"/>
+</p>
+
+### Fitur Update
+<p align="center">
+  <img src="Rancangan/fitur_update.png" width="250" alt="Update Note Feature"/>
+</p>
+
 ## Teknologi dan Plugin
 - Flutter SDK 3.x (Dart >=2.17.0 <4.0.0).
 - GetX untuk state management, dependency injection, dan navigasi.
