@@ -2,6 +2,12 @@
 
 Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ringan: login, tulis catatan, simpan di cloud, atur tampilan grid/list, serta ubah tema terang/gelap.
 
+## 📥 Download APK
+
+**[Download APK Terbaru](https://github.com/AnyX0/smart.notes.project/releases/latest/download/app-release.apk)**
+
+Atau kunjungi halaman [Releases](https://github.com/AnyX0/smart.notes.project/releases) untuk versi lainnya.
+
 ## Fitur Utama
 - Autentikasi email-password (Firebase Auth) dengan sesi reaktif via GetX.
 - CRUD catatan realtime di Cloud Firestore per pengguna (`users/{uid}/notes`).
