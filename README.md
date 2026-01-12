@@ -1,6 +1,6 @@
 # Smart Notes (Flutter + Firebase)
 
-Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ringan: login, tulis catatan, simpan di cloud, atur tampilan grid/list, serta ubah tema terang/gelap. Dokumen ini dirancang agar siap dipajang di GitHub dan mudah diikuti.
+Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ringan: login, tulis catatan, simpan di cloud, atur tampilan grid/list, serta ubah tema terang/gelap.
 
 ## Fitur Utama
 - Autentikasi email-password (Firebase Auth) dengan sesi reaktif via GetX.
