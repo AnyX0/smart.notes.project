@@ -34,11 +34,6 @@ Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ri
   <img src="Rancangan/account_screen_DM.png" width="250" alt="Account Screen (Dark Mode)"/>
 </p>
 
-### Fitur Update
-<p align="center">
-  <img src="Rancangan/fitur_update.png" width="250" alt="Update Note Feature"/>
-</p>
-
 ## Teknologi dan Plugin
 - Flutter SDK 3.x (Dart >=2.17.0 <4.0.0).
 - GetX untuk state management, dependency injection, dan navigasi.
