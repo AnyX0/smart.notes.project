@@ -52,8 +52,8 @@ Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ri
 ## Instalasi Cepat
 1) Clone repo
 ```bash
-git clone <repo-url>
-cd smart.notes
+git clone smart.notes.project
+cd smart.notes.project
 ```
 2) Pasang dependensi
 ```bash
