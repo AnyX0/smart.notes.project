@@ -111,12 +111,6 @@ flutter run
 - Detail/Hapus: tampilkan informasi catatan, ubah atau hapus dengan dialog konfirmasi.
 - Pengaturan: pilih tema system/light/dark dan logout.
 
-## Pengujian
-Jalankan tes (jika ada):
-```bash
-flutter test
-```
-
 ## Catatan dan Tips
 - Periksa rules Firestore agar hanya pemilik UID dapat membaca/menulis `users/{uid}/notes/*`.
 - Jika data tidak muncul, pastikan `noteStream` menerima UID aktif (lihat binding di `NoteController`).
