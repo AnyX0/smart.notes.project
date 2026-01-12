@@ -1,112 +1,93 @@
-# Flutter Note – Dokumentasi Proyek
+# Smart Notes (Flutter + Firebase)
 
-Aplikasi pencatatan sederhana berbasis Flutter yang terintegrasi dengan Firebase Authentication dan Cloud Firestore. Pengguna dapat membuat akun, masuk, menambahkan catatan, mengubah tampilan daftar (grid/list), mengedit atau menghapus catatan, serta mengubah mode tema (terang/gelap) melalui GetX sebagai state management.
+Aplikasi pencatatan lintas platform dengan GetX dan Firebase. Fokus pada alur ringan: login, tulis catatan, simpan di cloud, atur tampilan grid/list, serta ubah tema terang/gelap. Dokumen ini dirancang agar siap dipajang di GitHub dan mudah diikuti.
 
 ## Fitur Utama
-- Autentikasi email & password (Firebase Auth) dengan sesi reaktif melalui GetX.
-- CRUD catatan tersinkronisasi real-time ke Cloud Firestore (per pengguna).
-- Toggle tampilan list/grid untuk catatan dan pemilihan warna acak per kartu.
-- Editor catatan dengan validasi konten kosong, serta dialog peringatan saat konten tidak berubah.
-- Manajemen akun (tampilkan nama/email, logout) dan pengaturan mode tema (system/light/dark).
+- Autentikasi email-password (Firebase Auth) dengan sesi reaktif via GetX.
+- CRUD catatan realtime di Cloud Firestore per pengguna (`users/{uid}/notes`).
+- Toggle tampilan list atau grid dan warna kartu acak untuk variasi visual.
+- Editor catatan dengan validasi konten kosong dan peringatan ketika tidak ada perubahan sebelum keluar.
+- Detail catatan: tampilkan waktu dibuat/diubah, ubah, atau hapus dengan dialog konfirmasi.
+- Tema system/light/dark serta halaman akun untuk menampilkan nama, email, dan aksi logout.
+- Kesiapan Google Sign-In (dependensi sudah ada, UI bisa ditambahkan kemudian).
 
-## Teknologi yang Digunakan
-- Flutter SDK (Dart) untuk aplikasi lintas platform.
+## Teknologi dan Plugin
+- Flutter SDK 3.x (Dart >=2.17.0 <4.0.0).
 - GetX untuk state management, dependency injection, dan navigasi.
-- Firebase Core untuk inisialisasi proyek Firebase.
-- Firebase Auth untuk autentikasi email/password.
-- Cloud Firestore untuk penyimpanan catatan per pengguna (koleksi `users/{uid}/notes`).
-- Google Sign-In (sudah ada dependensi, belum diintegrasikan pada UI saat ini).
-- flutter_staggered_grid_view untuk layout grid/list catatan dinamis.
-- intl untuk formatting tanggal/waktu.
-- uuid untuk pembuatan ID unik catatan.
+- Firebase Core untuk inisialisasi, Firebase Auth untuk login email/password.
+- Cloud Firestore untuk sinkronisasi catatan per pengguna.
+- flutter_staggered_grid_view untuk layout grid/list dinamis.
+- intl untuk format tanggal dan waktu.
+- uuid untuk pembuatan ID unik dokumen.
+- google_sign_in terpasang, siap dipakai jika ingin menambah login Google.
 
 ## Arsitektur Singkat
 - **Entry point**: [lib/main.dart](lib/main.dart) mem-bootstrapping Firebase, mendaftarkan controller GetX, dan menyiapkan tema.
-- **Routing awal**: [lib/utils/root.dart](lib/utils/root.dart) memilih antara layar login atau beranda berdasarkan status `firebaseUser`.
+- **Routing awal**: [lib/utils/root.dart](lib/utils/root.dart) memilih layar login atau beranda berdasarkan `firebaseUser`.
 - **State management**: GetX Controller
-  - [lib/controllers/authController.dart](lib/controllers/authController.dart) untuk autentikasi dan preferensi tampilan (axisCount).
-  - [lib/controllers/userController.dart](lib/controllers/userController.dart) menyimpan profil pengguna aktif.
-  - [lib/controllers/noteController.dart](lib/controllers/noteController.dart) mengelola stream catatan per UID.
-- **Layanan data**: [lib/services/database.dart](lib/services/database.dart) membungkus operasi Firestore (user profile dan koleksi `notes`).
-- **Model**: [lib/models/user.dart](lib/models/user.dart) dan [lib/models/noteModel.dart](lib/models/noteModel.dart) sebagai representasi data Firestore.
-- **UI**: layar autentikasi, home, detail catatan, pengaturan, serta komponen kecil (custom icon button, list tile, text field).
+  - [lib/controllers/authController.dart](lib/controllers/authController.dart) untuk autentikasi, binding user, dan preferensi axisCount grid/list.
+  - [lib/controllers/userController.dart](lib/controllers/userController.dart) menyimpan profil user aktif.
+  - [lib/controllers/noteController.dart](lib/controllers/noteController.dart) streaming daftar catatan sesuai UID.
+- **Layanan data**: [lib/services/database.dart](lib/services/database.dart) membungkus operasi Firestore untuk profil user dan catatan.
+- **Model**: [lib/models/user.dart](lib/models/user.dart) dan [lib/models/noteModel.dart](lib/models/noteModel.dart).
+- **UI**: layar autentikasi, beranda, form tambah/ubah catatan, detail catatan, dan pengaturan tema.
 
-## Struktur Direktori (utama)
+## Struktur Direktori Ringkas
 - lib/
-  - controllers/ — GetX controller (auth, user, note)
-  - models/ — Model data user & note
+  - controllers/ — Auth, user, note (GetX).
+  - models/ — Representasi data user dan catatan.
   - screens/
-	 - auth/ — Login & Sign Up
-	 - home/ — Home, add note, note list, show note
-	 - settings/ — Setting, account, dark mode
-	 - widgets/ — Komponen kecil (icon button)
-  - services/ — Firestore wrapper
-  - utils/ — Root router & tema
-
-## Dependensi Penting
-- get: navigasi + state management.
-- firebase_core, firebase_auth: inisialisasi Firebase & autentikasi email/password.
-- cloud_firestore: penyimpanan catatan per pengguna.
-- google_sign_in: sudah terdaftar, belum digunakan pada UI saat ini.
-- flutter_staggered_grid_view: layout grid/list dinamis untuk kartu catatan.
-- intl: format tanggal pada tampilan catatan.
-- uuid: pembangkit ID unik untuk dokumen catatan.
-
-## Alur Fungsional Utama
-- **Autentikasi**: Form login/sign-up dengan validasi dasar. Setelah sukses, data user diambil/ditulis ke koleksi `users` lalu disimpan di `UserController`.
-- **Home & daftar catatan**: `NoteList` menampilkan Firestore stream dengan StaggeredGrid. Tombol toggle list/grid mengubah `axisCount` di `AuthController`.
-- **Tambah catatan**: `AddNotePage` memvalidasi konten kosong, menyimpan ke Firestore dengan timestamp.
-- **Lihat/Ubah/Hapus**: `ShowNote` memuat catatan terpilih, menampilkan tanggal/waktu, dapat update atau delete dengan dialog konfirmasi.
-- **Pengaturan**: Mode tema (system/light/dark) via `Get.changeThemeMode`, layar akun menampilkan nama/email dan logout.
+    - auth/ — Login dan Sign Up.
+    - home/ — Beranda, daftar catatan, tambah/lihat catatan.
+    - settings/ — Akun dan pengaturan tema.
+    - widgets/ — Komponen kecil reusable.
+  - services/ — Pembungkus Firestore.
+  - utils/ — Root router, tema.
 
 ## Prasyarat
-- Flutter SDK 3.x (minimal Dart SDK sesuai `pubspec`: >=2.17.0 <4.0.0)
-- Android Studio / Xcode / VS Code + Flutter extension
-- Akun Firebase dengan proyek yang sudah dikonfigurasi (iOS & Android)
-- Java 17 (untuk Gradle modern), Android SDK & emulator/perangkat fisik
+- Flutter SDK 3.x, Java 17+, Android SDK, dan perangkat/emulator.
+- Akun Firebase dengan project untuk Android dan iOS.
+- Editor favorit (VS Code/Android Studio/Xcode) dengan Flutter extension.
 
-## Langkah Instalasi & Menjalankan
-1) **Clone project**
-	```bash
-	git clone <repo-url>
-	cd notes_project
-	```
-2) **Pasang dependensi**
-	```bash
-	flutter pub get
-	```
-3) **Konfigurasi Firebase**
-	- Buat proyek di Firebase Console.
-	- Aktifkan Authentication → Email/Password.
-	- Aktifkan Cloud Firestore (mode production atau test sesuai kebutuhan).
-	- Unduh `google-services.json` (Android) dan tempatkan di `android/app/` (sudah ada contoh di repo, ganti dengan milik Anda bila perlu).
-	- Unduh `GoogleService-Info.plist` (iOS) dan tempatkan di `ios/Runner/` (sudah ada contoh, ganti bila perlu).
-	- Sesuaikan `applicationId`/`bundleId` di `android/app/build.gradle.kts` dan `ios/Runner` jika berbeda dengan konfigurasi Firebase Anda.
-4) **Jalankan aplikasi (dev)**
-	```bash
-	flutter run
-	```
-	Pilih device (emulator/perangkat fisik).
-5) **Build release (opsional)**
-	- Android: `flutter build apk --release`
-	- iOS: `flutter build ios --release` (dari macOS dengan Xcode & provisioning siap).
+## Instalasi Cepat
+1) Clone repo
+```bash
+git clone <repo-url>
+cd smart.notes
+```
+2) Pasang dependensi
+```bash
+flutter pub get
+```
+3) Konfigurasi Firebase
+- Aktifkan Authentication (Email/Password) dan Cloud Firestore.
+- Ganti contoh `android/app/google-services.json` dan `ios/Runner/GoogleService-Info.plist` dengan milik Anda.
+- Samakan `applicationId`/`bundleId` dengan konfigurasi Firebase.
+4) Jalankan aplikasi
+```bash
+flutter run
+```
+5) Build rilis (opsional)
+- Android: `flutter build apk --release`
+- iOS: `flutter build ios --release` (macOS dengan Xcode dan provisioning siap).
 
-## Konfigurasi Tambahan
-- **Tema**: ubah skema warna di [lib/utils/theme.dart](lib/utils/theme.dart).
-- **Struktur data Firestore**: ditangani di [lib/services/database.dart](lib/services/database.dart). Koleksi `users/{uid}/notes/{noteId}` menyimpan `title`, `body`, dan `creationDate`.
-- **Routing awal**: logika pemilihan layar login/home ada di [lib/utils/root.dart](lib/utils/root.dart).
-- **Validasi form**: lihat [lib/screens/auth/login.dart](lib/screens/auth/login.dart) dan [lib/screens/auth/signup.dart](lib/screens/auth/signup.dart).
+## Alur Utama Aplikasi
+- Login/Sign Up: validasi dasar, tulis atau baca profil di Firestore, simpan di `UserController`.
+- Beranda: stream catatan realtime, toggle grid/list dengan `axisCount` di `AuthController`.
+- Tambah/Ubah: simpan catatan dengan timestamp; editor menolak konten kosong dan memberi peringatan jika tidak ada perubahan.
+- Detail/Hapus: tampilkan informasi catatan, ubah atau hapus dengan dialog konfirmasi.
+- Pengaturan: pilih tema system/light/dark dan logout.
 
 ## Pengujian
-- Jalankan tes widget/unit (jika ditambahkan):
-  ```bash
-  flutter test
-  ```
+Jalankan tes (jika ada):
+```bash
+flutter test
+```
 
-## Pemecahan Masalah Umum
-- **Layar kosong setelah login**: pastikan `getUser` di Firestore mengembalikan dokumen untuk UID baru (fungsi sudah membuat dokumen baru jika tidak ada, lihat [lib/controllers/authController.dart](lib/controllers/authController.dart)).
-- **Catatan tidak muncul**: pastikan user terautentik dan Firestore rules mengizinkan akses ke `users/{uid}/notes/*` untuk UID yang sama.
-- **Build Android gagal**: periksa versi Java 17+, jalankan `flutter doctor`, dan pastikan `google-services.json` valid.
+## Catatan dan Tips
+- Periksa rules Firestore agar hanya pemilik UID dapat membaca/menulis `users/{uid}/notes/*`.
+- Jika data tidak muncul, pastikan `noteStream` menerima UID aktif (lihat binding di `NoteController`).
+- Ingin login Google? UI tinggal ditambahkan karena `google_sign_in` sudah menjadi dependensi.
 
 ## Lisensi
 Belum ditentukan. Tambahkan lisensi sesuai kebutuhan proyek.
